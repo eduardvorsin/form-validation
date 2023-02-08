@@ -174,3 +174,25 @@ export function validateConfirmPassword(input) {
 
   return isValid;
 }
+
+export function validatePrivacyPolicy(input) {
+  if (input?.tagName !== 'INPUT') {
+    throw new Error('the passed value must be an input element');
+  }
+
+  hideError(input);
+
+  const isValid = !isRequiredAndValueMissing(input);
+
+  if (!isValid) {
+    showError(input, 'The field is required');
+    input.focus();
+    input.classList.add('focus-visible');
+  }
+
+  input.classList.toggle('is-invalid', !isValid);
+  // eslint-disable-next-line no-param-reassign
+  input.ariaInvalid = !isValid;
+
+  return isValid;
+}
