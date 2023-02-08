@@ -96,3 +96,47 @@ export function validateEmail(input) {
 
   return isValid;
 }
+
+export function validatePassword(input) {
+  if (input?.tagName !== 'INPUT') {
+    throw new Error('the passed value must be an input element');
+  }
+
+  hideError(input);
+
+  const passwordRules = {
+    isRequiredAndValueMissing: {
+      message: 'The field is required',
+      validationFunction: isRequiredAndValueMissing,
+    },
+
+    longerOrEqualThan5: {
+      message: 'the minimum count of char is 5',
+      validationFunction: longerOrEqualThan5,
+    },
+
+    hasOneOrMoreDigits: {
+      message: 'the field input should has one or more digits',
+      validationFunction: hasOneOrMoreDigits,
+    },
+
+    hasOneOrMoreSpecialCharacters: {
+      message: 'the field input should has one or more following characters:!@#$%^&*',
+      validationFunction: hasOneOrMoreSpecialCharacters,
+    },
+
+    hasOneOrMoreLowercaseCharachers: {
+      message: 'the field input should has one or more lowercase characters',
+      validationFunction: hasOneOrMoreLowercaseCharachers,
+    },
+
+    hasOneOrMoreUppercaseCharachers: {
+      message: 'the field input should has one or more uppercase characters',
+      validationFunction: hasOneOrMoreUppercaseCharachers,
+    },
+  };
+
+  const isValid = validateRulesForInput(passwordRules, input);
+
+  return isValid;
+}
