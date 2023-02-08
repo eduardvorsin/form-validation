@@ -237,3 +237,22 @@ export const validationRules = {
   privacyPolicy: validatePrivacyPolicy,
   communicationMethod: validateCommunicationMethod,
 };
+
+export function validateForm(form) {
+  if (form?.tagName !== 'FORM') {
+    throw new Error('the passed value must be a form element');
+  }
+
+  let isValid = true;
+
+  const ruleEntires = Object.entries(validationRules);
+
+  ruleEntires.forEach((rule) => {
+    const [field, validationFunction] = rule;
+    if (!validationFunction(form.elements[field])) {
+      isValid = false;
+    }
+  });
+
+  return isValid;
+}
