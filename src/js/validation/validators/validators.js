@@ -48,3 +48,27 @@ export function validateRulesForInput(rules, input) {
 
   return isValid;
 }
+
+export function validateUsername(input) {
+  if (input?.tagName !== 'INPUT') {
+    throw new Error('the passed value must be an input element');
+  }
+
+  hideError(input);
+
+  const usernameRules = {
+    isRequiredAndValueMissing: {
+      message: 'The field is required',
+      validationFunction: isRequiredAndValueMissing,
+    },
+
+    longerOrEqualThan3: {
+      message: 'the minimum count of char is 3',
+      validationFunction: longerOrEqualThan3,
+    },
+  };
+
+  const isValid = validateRulesForInput(usernameRules, input);
+
+  return isValid;
+}
