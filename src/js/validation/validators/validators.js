@@ -228,3 +228,12 @@ export function validateCommunicationMethod(input) {
 
   return isValid;
 }
+
+export const validationRules = {
+  username: validateUsername,
+  email: validateEmail,
+  password: validatePassword,
+  confirmPassword: validateConfirmPassword,
+  privacyPolicy: validatePrivacyPolicy,
+  communicationMethod: validateCommunicationMethod,
+};
