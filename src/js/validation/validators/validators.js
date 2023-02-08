@@ -196,3 +196,35 @@ export function validatePrivacyPolicy(input) {
 
   return isValid;
 }
+
+export function validateCommunicationMethod(input) {
+  if (input?.tagName !== 'INPUT' && !input?.length) {
+    throw new Error('the passed value must be an input element');
+  }
+
+  hideError(input);
+
+  let radios;
+
+  if (input?.length) {
+    radios = [...input];
+  } else {
+    radios = [...input.closest('.form-item').elements];
+  }
+
+  const isValid = radios.some((radio) => radio.checked);
+
+  if (!isValid) {
+    showError(input, 'The field must be checked');
+    radios[0].focus();
+    radios[0].classList.add('focus-visible');
+  }
+
+  radios.forEach((radio) => {
+    radio.classList.toggle('is-invalid', !isValid);
+    // eslint-disable-next-line no-param-reassign
+    radio.ariaInvalid = !isValid;
+  });
+
+  return isValid;
+}
