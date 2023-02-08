@@ -72,3 +72,27 @@ export function validateUsername(input) {
 
   return isValid;
 }
+
+export function validateEmail(input) {
+  if (input?.tagName !== 'INPUT') {
+    throw new Error('the passed value must be an input element');
+  }
+
+  hideError(input);
+
+  const emailRules = {
+    isRequiredAndValueMissing: {
+      message: 'The field is required',
+      validationFunction: isRequiredAndValueMissing,
+    },
+
+    isEmail: {
+      message: 'the field input should contains following pattern: example@email.com',
+      validationFunction: isEmail,
+    },
+  };
+
+  const isValid = validateRulesForInput(emailRules, input);
+
+  return isValid;
+}
