@@ -29,3 +29,20 @@ export function showError(input, message) {
   currentInput.setAttribute('aria-describedby', errorId);
 }
 
+export function hideError(input) {
+  if (input?.tagName !== 'INPUT' && !input?.length) {
+    throw new Error('the passed value must be an input element');
+  }
+
+  const isRadioButton = Boolean(input?.length);
+
+  const currentInput = isRadioButton ? input[0] : input;
+  const closestCommonParent = currentInput.closest('.form-item');
+
+  const errorMessage = closestCommonParent.querySelector('.error-message');
+
+  if (errorMessage) {
+    errorMessage.remove();
+    currentInput.removeAttribute('aria-describedby');
+  }
+}
