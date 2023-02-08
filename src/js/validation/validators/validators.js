@@ -9,3 +9,42 @@ export const hasOneOrMoreSpecialCharacters = (value) => value.search(/[!@#$%^&*]
 export const hasOneOrMoreLowercaseCharachers = (value) => value.search(/[a-z]+/) >= 0;
 export const hasOneOrMoreUppercaseCharachers = (value) => value.search(/[A-Z]+/) >= 0;
 export const isPasswordsMatch = (passwordValue, confirmValue) => passwordValue === confirmValue;
+
+export function validateRulesForInput(rules, input) {
+  if (input?.tagName !== 'INPUT') {
+    throw new Error('the passed value must be an input element');
+  }
+
+  if (typeof rules !== 'object') {
+    throw new Error('the passed argument rules must be an object');
+  }
+
+  const { value } = input;
+  let isValid = true;
+
+  Object.keys(rules).forEach((rule) => {
+    let args;
+    let isRuleInvalidated;
+
+    if (rule === 'isRequiredAndValueMissing') {
+      args = input;
+      isRuleInvalidated = rules[rule].validationFunction(args);
+    } else {
+      args = value;
+      isRuleInvalidated = !rules[rule].validationFunction(args);
+    }
+
+    if (isRuleInvalidated) {
+      showError(input, rules[rule].message);
+      input.focus();
+      input.classList.add('focus-visible');
+      isValid = false;
+    }
+  });
+
+  input.classList.toggle('is-invalid', !isValid);
+  // eslint-disable-next-line no-param-reassign
+  input.ariaInvalid = !isValid;
+
+  return isValid;
+}
