@@ -140,3 +140,37 @@ export function validatePassword(input) {
 
   return isValid;
 }
+
+export function validateConfirmPassword(input) {
+  if (input?.tagName !== 'INPUT') {
+    throw new Error('the passed value must be an input element');
+  }
+
+  hideError(input);
+
+  const passwordValue = input.form.elements.password.value;
+  const confirmValue = input.value;
+
+  let isValid = true;
+
+  if (isRequiredAndValueMissing(input)) {
+    showError(input, 'The field is required');
+    isValid = false;
+  }
+
+  if (!isPasswordsMatch(passwordValue, confirmValue)) {
+    showError(input, 'confirm password does not match');
+    isValid = false;
+  }
+
+  if (!isValid) {
+    input.focus();
+    input.classList.add('focus-visible');
+  }
+
+  input.classList.toggle('is-invalid', !isValid);
+  // eslint-disable-next-line no-param-reassign
+  input.ariaInvalid = !isValid;
+
+  return isValid;
+}
