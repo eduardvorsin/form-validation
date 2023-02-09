@@ -15,3 +15,24 @@ const isInputField = (input) => {
   const inputTypes = ['text', 'password', 'email', 'url'];
   return inputTypes.includes(type);
 };
+
+const debouncedValidationReducer = debounce(validationReducer, 500);
+
+signUpForm.addEventListener('input', (e) => {
+  if (isInputField(e.target)) {
+    const { valueMissing } = e.target.validity;
+    e.target.classList.toggle('no-empty', !valueMissing);
+  }
+
+  debouncedValidationReducer(e.target);
+});
+
+signUpForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const isFormValid = validateForm(e.target);
+
+  if (isFormValid) {
+    e.currentTarget.submit();
+  }
+});
