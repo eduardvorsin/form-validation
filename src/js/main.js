@@ -47,3 +47,22 @@ function changePasswordVisibillity(passwordInput) {
   // eslint-disable-next-line no-param-reassign
   passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
 }
+
+document.addEventListener('click', (e) => {
+  if (!e.target.classList.contains('form-field-wrapper__show-password')) return;
+
+  const passwordInput = e.target.parentElement.querySelector('input');
+  const passwordAriaDescription = e.target.parentElement.querySelector('.form-field-wrapper__description');
+
+  e.preventDefault();
+  changePasswordVisibillity(passwordInput);
+
+  const isTextType = passwordInput.type === 'text';
+  const descriptionText = isTextType ? 'Password is shown' : 'Password is hidden';
+  const buttonText = isTextType ? 'Hide password' : 'Show password';
+
+  e.target.classList.toggle('_active', isTextType);
+  passwordAriaDescription.textContent = descriptionText;
+  e.target.textContent = buttonText;
+});
+
