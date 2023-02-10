@@ -14,7 +14,9 @@ export function changePasswordVisibillity(passwordInput) {
     throw new Error('the passed value must be an input element');
   }
 
-  if (passwordInput.type !== 'text' && passwordInput.type !== 'password') return;
+  if (passwordInput.type !== 'text' && passwordInput.type !== 'password') {
+    throw new Error('the input passed must be either text type or password');
+  }
 
   // eslint-disable-next-line no-param-reassign
   passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
