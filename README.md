@@ -1,4 +1,4 @@
-# Валидация формы чистом JavaScript
+# Валидация формы
 [Cсылка на демо](https://eduardvorsin.github.io/form-validation/src/index.html)
 
 ![Валидация формы](./src//images/validation.jpg)
