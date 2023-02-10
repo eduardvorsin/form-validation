@@ -185,7 +185,7 @@ export function validatePrivacyPolicy(input) {
   const isValid = !isRequiredAndValueMissing(input);
 
   if (!isValid) {
-    showError(input, 'The field is required');
+    showError(input, 'The checkbox must be checked');
     input.focus();
     input.classList.add('focus-visible');
   }
